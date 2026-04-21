@@ -44,6 +44,20 @@ def teacher_screen_login():
        
 
    footer_dashboard()
+
+
+def register_teacher(teacher_username,teacher_name,teacher_pass,teacher_pass_confirm):
+    if not teacher_username or not teacher_name or not teacher_pass:
+        return False,"All Fields are required!"
+    if teacher_pass!=teacher_pass_confirm:
+        return False,"Password doesn't match"
+    
+    try:
+        create_teacher(teacher_username,teacher_pass,teacher_name)
+        return True,"Successfully Created ! Login Now"
+    except Exception as e:
+        return False,"Unexpected Error!"
+
 def teacher_screen__register():
     c1,c2=st.columns(2,vertical_alignment="center",gap="xxlarge")
     with c1:
@@ -65,7 +79,8 @@ def teacher_screen__register():
     btnc1,btnc2=st.columns(2)
 
     with btnc1:
-       st.button('Register',icon=':material/passkey:',shortcut="control+enter",width='stretch')
+       if st.button('Register',icon=':material/passkey:',shortcut="control+enter",width='stretch'):
+           success,message=register_teacher(teacher_username,teacher_name,teacher_pass,teacher_pass_confirm)
 
     with btnc2:
        if st.button("Login Instead",type="primary",icon=":material/passkey:",width="stretch"):
