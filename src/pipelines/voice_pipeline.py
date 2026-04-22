@@ -58,7 +58,7 @@ def process_bulk_audio(audio_bytes,candidates_dict,threshold=0.65):
 
                 segment_audio=audio[start:end]
                 wav=preprocess_wav(segment_audio)
-                new_embedding=encoder.embed_utternace(wav)
+                embedding=encoder.embed_utternace(wav)
 
                 sid,score=identify_speaker(embedding,candidates_dict,threshold)
 

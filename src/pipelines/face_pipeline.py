@@ -34,7 +34,7 @@ def get_face_embedding(image_np):
         
 
         encodings.append(np.array(face_descriptor))
-        return encodings
+    return encodings
     
 def get_trained_model():
     X=[]
