@@ -54,6 +54,7 @@ def style_base_layout():
                     font-size: 3.5rem !important;
                     line-height: 1.1 !important;
                     margin-bottom: 0rem !important;
+                
                     
                  }  
               h2{
@@ -61,7 +62,7 @@ def style_base_layout():
                     font-size: 2rem !important;
                     line-height: 0.9 !important;
                     margin-bottom: 0rem !important;
-                    color:black ;
+                    color:black !important;
                                        
                 } 
                 h3,h4,p{
@@ -112,6 +113,23 @@ def style_base_layout():
                 button:hover{
                     transform:scale(1.05) ;
                 }
+                
+
+                /* IMPORTANT: button text is inside p tag */
+                 div.stButton > button p {
+                color: white !important;
+              margin: 0 !important;
+                }
+
+              /* fallback for spans (new Streamlit versions) */
+             div.stButton > button span {
+               color: white !important;
+             }
+
+              div.stButton > button:hover {
+            transform: scale(1.05);
+            }
+
 
                 
                 </style>
