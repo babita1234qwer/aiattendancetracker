@@ -1,7 +1,7 @@
 import streamlit as st
 from src.ui.base_layout import style_base_layout, style_background_dashboard
 from src.components.header import header_dashboard
-
+from src.components.subject_card import subject_card
 from src.components.footer import footer_dashboard
 
 
@@ -89,8 +89,8 @@ def teacher_tab_manage_subjects():
     if subjects:
         for sub in subjects:
             stats=[
-                ("","Students",sub['total_students']),
-                ("","Classes",sub['total_classes']),
+                ("👥","Students",sub['total_students']),
+                ("⏰","Classes",sub['total_classes']),
             ]
 
         def share_btn():
