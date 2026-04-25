@@ -3,10 +3,14 @@ from src.ui.base_layout import style_base_layout, style_background_dashboard
 from src.components.header import header_dashboard
 from src.components.subject_card import subject_card
 from src.components.footer import footer_dashboard
+from src.components.dialog_add_photo import add_photos_dialog
 
 
-from src.database.db import check_teacher_exists,create_teacher,teacher_login
+
+
+from src.database.db import check_teacher_exists,create_teacher,teacher_login,get_teacher_subjects
 from src.components.dialog_create_subject import create_subject_dialog
+from src.components.dialog_share_subject import share_subject_dialog
 def teacher_screen():
     style_background_dashboard()
     style_base_layout()
@@ -69,7 +73,30 @@ def teacher_dashboard():
     footer_dashboard()
 
 def teacher_tab_take_attendance():
-    st.header("Take AI Attendance")
+    teacher_id=st.session_state.teacher_data['teacher_id']
+    st.header('Take AI Attendance')
+
+
+    if 'attendance_images' not in st.session_state:
+        st.session_state.attendance_images=[]
+
+
+    subjects=get_teacher_subjects(teacher_id)
+    if not subjects:
+        st.warning('you havent created any subjects yet! Please create one to begin!')
+        return
+    subject_options={f"{s['name']}={s['subject_code']}" for s in subjects}
+    col1,col2=st.column([3,1])
+
+    with col1:
+        st.selectbox('Select Subject',options=list(subject_options.keys()))
+
+    with col2:
+        if st.button("Add Photos",type="primary",icon=":material/photo_prints:",width="stretch"):
+            add_photos_dialog()
+    selected_subject_id=subject_options[selected_subject_label]
+
+
 
 def teacher_tab_manage_subjects():
     teacher_id=st.session_state.teacher_data['teacher_id']
@@ -88,13 +115,14 @@ def teacher_tab_manage_subjects():
     subjects=get_teacher_subjects(teacher_id)
     if subjects:
         for sub in subjects:
-            stats=[
-                ("👥","Students",sub['total_students']),
-                ("⏰","Classes",sub['total_classes']),
-            ]
+            stats = [
+    ("👥", "Students", sub['total_students']),
+    ("⏰", "Classes", sub['total_classes'])
+]
+        
 
         def share_btn():
-            if st.button(f"Share Code:{sub['name']}",key=["share_{sub['subject_code']}",icon=":material/share:"]):
+            if st.button(f"Share Code:{sub['name']}",key=f"share_{sub['subject_code']}",icon=":material/share:"):
                 share_subject_dialog(sub['name'],sub['subject_code'])
             st.space()
 

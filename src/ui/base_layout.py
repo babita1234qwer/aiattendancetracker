@@ -68,7 +68,11 @@ def style_base_layout():
                 h3,h4,p{
                 font-family:"Outfit", sans-serif !important;
                 color:black !important;} 
-                
+               div[data-testid="stDialog"] {
+               background-color: white !important;
+               color:white !important;
+                 }
+
             
 
             input[type="text"], input[type="password"] {
